@@ -11,13 +11,16 @@ import numpy as np
 def getfile(str):
 	"""This code formats the raw input file into suitable data."""             
 	arr = []
-	file_path = os.path.relpath(str + "/GPS_experiment.txt")
+	file_path = os.path.relpath(str)
 	# print filepath
+	var = True
 	with open(file_path) as fp:
 		for line in fp:
 			line = line.strip()
 			line = line.replace(' ',',')
-			arr.append(line.split(','))
+			if var is False:
+				arr.append(line.split(','))
+			var = False
 
 	return arr
 
@@ -35,15 +38,15 @@ def haversine(lon1, lat1, lon2, lat2):
     km = 6371* c
     return km
 
-def samepath(paths,i,j):
+def samepath(paths,ii,jj):
 	"""Given the paths directory and two indices this code checks whether 
 	the data belongs to the same path or not using gps coordinates."""
 	i=0
 	j=0
 	ctr = 0
-	arr = getfile(paths[i])
-	brr = getfile(paths[j])
-	
+	arr = getfile(paths[ii])
+	brr = getfile(paths[jj])
+	print (ii,jj)
 	while i < len(arr):
 	    j = 0
 	    id = -1
@@ -118,9 +121,9 @@ for subdir, dirs, files in os.walk(os.getcwd()):
     for file in files:
         #print os.path.join(subdir, file)
         filepath = subdir + os.sep + file
-        if 'GPS_experiment' in filepath:
+        if 'GPS' in filepath:
             # print (subdir[-19:-1])
-            arr.append(subdir)
+            arr.append(filepath)
 
 # print len(arr)
 
@@ -141,9 +144,10 @@ print (len(final_dir))
 i = 0
 j = 0
 
+# print arr
 """Checks for all pairs to see if they are the same paths or not
 Can be optimised to linear time but FTW."""
-f1=open('final_dir.txt', 'w+')
+f1=open('final_pathdir.txt', 'w+')
 graph = []
 while i < len(final_dir):
 	j = i +1
@@ -159,5 +163,5 @@ while i < len(final_dir):
 f1.close()
 
 print (graph)
-# getdtw(final_dir,graph)
+# 			# getdtw(final_dir,graph)
 
