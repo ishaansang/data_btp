@@ -145,23 +145,50 @@ i = 0
 j = 0
 
 # print arr
-"""Checks for all pairs to see if they are the same paths or not
-Can be optimised to linear time but FTW."""
-f1=open('final_pathdir.txt', 'w+')
+# """Checks for all pairs to see if they are the same paths or not
+# Can be optimised to linear time but FTW."""
+# f1=open('final_pathdir.txt', 'w+')
+# graph = []
+# while i < len(final_dir):
+# 	j = i +1
+# 	cur = []
+# 	while j < len(final_dir):
+# 		if samepath(final_dir,i,j):
+# 			print (final_dir[i][-19:-1],final_dir[j][-19:-1],file = f1)
+# 			cur.append(j)
+# 		j = j + 1
+# 	graph.append(cur)
+# 	i = i + 1
+
+# f1.close()
+
+# print (graph)
+# 			# 
+
+# [[1, 6, 7, 12, 13, 14, 15, 16, 18, 19, 20, 21], 
+# [6, 7, 12, 13, 14, 15, 16, 18, 19, 20, 21], 
+# [3], [], [], [11, 22, 23], 
+# [7, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21,22, 23], 
+# [11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23], 
+# [9], [], [], [22, 23], 
+# [13, 14, 15, 16, 18, 19], 
+# [14, 15, 16, 18, 19], 
+# [15, 16, 18, 19, 20, 21], 
+# [16, 18, 19, 20, 21], 
+# [], [], [19, 20, 21], 
+# [20, 21], [21], 
+# [], [23], []]
+
 graph = []
-while i < len(final_dir):
-	j = i +1
-	cur = []
-	while j < len(final_dir):
-		if samepath(final_dir,i,j):
-			print (final_dir[i][-19:-1],final_dir[j][-19:-1],file = f1)
-			cur.append(j)
-		j = j + 1
-	graph.append(cur)
-	i = i + 1
+graph.append((0,1,6,7,12,13,14,15,16,18,19,20,21)) 
+graph.append((2,3)) 
+graph.append(4)
+graph.append((5,11, 22, 23))
+graph.append((8,9))
+graph.append(10)
+graph.append(17)
 
-f1.close()
+print graph
 
-print (graph)
-# 			# getdtw(final_dir,graph)
 
+getdtw(final_dir,graph)
