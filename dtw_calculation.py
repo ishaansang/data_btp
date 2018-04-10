@@ -65,18 +65,14 @@ def samepath(paths,ii,jj):
 
 	return 0
 
-def getdtw(paths,graphs):
+def getdtw(paths,graphs,id):
 	# print os.getcwd()
 	i = 0
 	dtw = []
 	while i < len(graphs):
-		# file_path = os.path.relpath(os.getcwd() + "/"+paths[i] +  
-									# "/Experiment_" + paths[i][-19:] + "/LACC.txt")
-		# print paths[0][-19:]
-		# print paths
-		# file_path = "/" + file_path
+		
 		arr = []
-		file_path = paths[i]
+		file_path = paths[graphs[i]]
 		var = True
 		with open(file_path) as fp:
 			for line in fp:
@@ -90,15 +86,12 @@ def getdtw(paths,graphs):
 
 		j = 0
 		cur= []
-		print (i)
-		while j < len(graphs[i]):
-			# # print graphs[i][j]
-			# file_path = os.path.relpath(os.getcwd() + "/"+paths[graphs[i][j]] +  
-			# 							"/Experiment_" + paths[graphs[i][j]][-19:] + "/LACC.txt")
-			# file_path = "/" + file_path
+		print (graphs[i])
+		while j < len(graphs):
 			brr = []
-			file_path = paths[graphs[i][j]]
+			file_path = paths[graphs[j]]
 			var = True
+			print (graphs[j])
 			with open(file_path) as fp:
 				for line in fp:
 					line = line.strip()
@@ -110,15 +103,17 @@ def getdtw(paths,graphs):
 
 			x = np.array(arr)
 			y = np.array(brr)
-			# print x,y
-			# print (len(x) , len(y) ,type(x[0][0]))
 			distance, path = fastdtw(x, y, dist=euclidean)
-			# print(distance)
 			cur.append(distance)
 			j += 1
 		dtw.append(cur)
 		i+=1
-	print (dtw)
+	f = open("dtw_data"+str(id)+".txt","w+")
+	for rows in dtw:
+		for x in rows:
+			f.write(str(x) + ' ')
+		f.write('\n')
+	f.close()
 
 """Start of the main"""
 final_dir = []
@@ -127,11 +122,12 @@ for subdir, dirs, files in os.walk(os.getcwd()):
     for file in files:
         #print os.path.join(subdir, file)
         filepath = subdir + os.sep + file
-        if 'LACC' in filepath:
+        if 'LACC' in filepath :
             # print (subdir[-19:-1])
             final_dir.append(filepath)
 
 # print len(arr)
+
 
 # i = 0
 # j = 0
@@ -194,14 +190,12 @@ graph.append((8,9))
 graph.append((10,))
 graph.append((17,))
 
-print (graph)
 
-# ii = 0
-# while ii < len(final_dir):
-# 	final_dir[ii] = final_dir[ii].replace('GPS','ACC')
-# 	ii += 1
 
-# print final_dir
-# fp = open(final_dir[0])
-# print fp
-getdtw(final_dir,graph)
+for x in graph:
+	print x
+
+ii=0
+for rows in graph:
+	getdtw(final_dir,rows,ii)
+	ii+=1
