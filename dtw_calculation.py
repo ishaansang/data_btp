@@ -3,10 +3,8 @@ from os import path
 from math import radians, cos, sin, asin, sqrt
 import math
 import numpy as np
-# from scipy.spatial.distance import euclidean
-# from fastdtw import fastdtw
-# from scipy.spatial.distance import euclidean
-# from fastdtw import fastdtw
+from scipy.spatial.distance import euclidean
+from fastdtw import fastdtw
 
 def getfile(str):
 	"""This code formats the raw input file into suitable data."""             
@@ -71,36 +69,44 @@ def getdtw(paths,graphs):
 	# print os.getcwd()
 	i = 0
 	dtw = []
-	while i < len(paths):
-		file_path = os.path.relpath(os.getcwd() + "/"+paths[i] +  
-									"/Experiment_" + paths[i][-19:] + "/LACC.txt")
+	while i < len(graphs):
+		# file_path = os.path.relpath(os.getcwd() + "/"+paths[i] +  
+									# "/Experiment_" + paths[i][-19:] + "/LACC.txt")
 		# print paths[0][-19:]
 		# print paths
-		file_path = "/" + file_path
+		# file_path = "/" + file_path
 		arr = []
+		file_path = paths[i]
+		var = True
 		with open(file_path) as fp:
 			for line in fp:
 				line = line.strip()
 				line = line.replace(' ',',')
 				line = line.split(',')
-				line = map(float,line[0:2])
-				arr.append(line)
+				if var is False:
+					line = map(float,line[0:2])
+					arr.append(line)
+				var = False
 
 		j = 0
 		cur= []
 		print (i)
 		while j < len(graphs[i]):
-			# print graphs[i][j]
-			file_path = os.path.relpath(os.getcwd() + "/"+paths[graphs[i][j]] +  
-										"/Experiment_" + paths[graphs[i][j]][-19:] + "/LACC.txt")
-			file_path = "/" + file_path
+			# # print graphs[i][j]
+			# file_path = os.path.relpath(os.getcwd() + "/"+paths[graphs[i][j]] +  
+			# 							"/Experiment_" + paths[graphs[i][j]][-19:] + "/LACC.txt")
+			# file_path = "/" + file_path
 			brr = []
+			file_path = paths[graphs[i][j]]
+			var = True
 			with open(file_path) as fp:
 				for line in fp:
 					line = line.strip()
 					line = line.split(',')
-					line = map(float,line[0:2])
-					brr.append(line)	
+					if var is False:
+						line = map(float,line[0:2])
+						brr.append(line)	
+					var = False
 
 			x = np.array(arr)
 			y = np.array(brr)
@@ -112,37 +118,37 @@ def getdtw(paths,graphs):
 			j += 1
 		dtw.append(cur)
 		i+=1
-	# print dtw
+	print (dtw)
 
 """Start of the main"""
-arr = []
+final_dir = []
 """ Storing all the file directory."""
 for subdir, dirs, files in os.walk(os.getcwd()):
     for file in files:
         #print os.path.join(subdir, file)
         filepath = subdir + os.sep + file
-        if 'GPS' in filepath:
+        if 'LACC' in filepath:
             # print (subdir[-19:-1])
-            arr.append(filepath)
+            final_dir.append(filepath)
 
 # print len(arr)
 
-i = 0
-j = 0
-"""storing path directory of the files that have more than 100 gps coordinates in them."""
-final_dir = []
-while i < len(arr):
-	file1 = getfile(arr[i])
-	if len(file1) < 100:
-		i = i + 1
-		pass
-	final_dir.append(arr[i])
-	i = i + 1
-	pass
+# i = 0
+# j = 0
+# """storing path directory of the files that have more than 100 gps coordinates in them."""
+# final_dir = []
+# while i < len(arr):
+# 	file1 = getfile(arr[i])
+# 	if len(file1) < 100:
+# 		i = i + 1
+# 		pass
+# 	final_dir.append(arr[i])
+# 	i = i + 1
+# 	pass
 
-print (len(final_dir))
-i = 0
-j = 0
+# print (len(final_dir))
+# i = 0
+# j = 0
 
 # print arr
 # """Checks for all pairs to see if they are the same paths or not
@@ -182,13 +188,20 @@ j = 0
 graph = []
 graph.append((0,1,6,7,12,13,14,15,16,18,19,20,21)) 
 graph.append((2,3)) 
-graph.append(4)
+graph.append((4,))
 graph.append((5,11, 22, 23))
 graph.append((8,9))
-graph.append(10)
-graph.append(17)
+graph.append((10,))
+graph.append((17,))
 
-print graph
+print (graph)
 
+# ii = 0
+# while ii < len(final_dir):
+# 	final_dir[ii] = final_dir[ii].replace('GPS','ACC')
+# 	ii += 1
 
+# print final_dir
+# fp = open(final_dir[0])
+# print fp
 getdtw(final_dir,graph)
