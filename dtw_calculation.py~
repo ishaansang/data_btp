@@ -199,4 +199,3 @@ ii=0
 for rows in graph:
 	getdtw(final_dir,rows,ii)
 	ii+=1
-

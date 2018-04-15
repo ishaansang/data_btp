@@ -11,14 +11,14 @@ def group(val,s1,s2,arr):
 	print val
 	for x in s1:
 		# print x
-		sum1 = min(arr[val][x],sum1)
+		sum1 += arr[val][x]
 
 	for y in s2:
-		sum2 = min(arr[val][y],sum2)
+		sum2 += arr[val][y]
 		# print y
 
 	print sum1,sum2
-	return sum1 > sum2
+	return sum1/(float(len(s1))) > sum2/(float(len(s2)))
 		
 
 
@@ -74,7 +74,7 @@ while not q.empty():
 
 
 X = np.array(arr)
-kmeans = KMeans(n_clusters=2, random_state=None).fit(X)
+kmeans = KMeans(n_clusters=2, random_state=0).fit(X)
 print kmeans.labels_	
 
 print 'here'

@@ -47,3 +47,14 @@ for key,value in sorted(d.iteritems()):
 
 sys.stdout = orig_stdout
 f.close()
+
+
+
+
+
+# for subdir, dirs, files in os.walk(os.getcwd()):
+#     for file in files:
+#         filepath = subdir + os.sep + file
+#         if file.startswith( 'stoptiming' ):
+#             files.append(filepath)
+#             print filepath

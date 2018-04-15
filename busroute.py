@@ -14,10 +14,7 @@ graph.append((17,))
 files = []
 files2 = []
 
-# with open('filepaths.txt') as fp:
-# 	for line in fp:
-# 		files2.append(line)
-# 		print line
+
 
 for subdir, dirs, files in os.walk(os.getcwd()):
     for file in files:
@@ -50,12 +47,6 @@ for rows in graph:
 	f.close()
 	id += 1
 
-	# print "tyoyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
-	# for key,value in sorted(d.iteritems()):
-	#     	if len(value) is not 0:
-	#     		print key,sorted(value)
-
-	# sys.stdout = orig_stdout
-	# f.close()
+	
 	
 
