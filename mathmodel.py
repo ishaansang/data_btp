@@ -115,7 +115,6 @@ for key,value in sorted(d.iteritems()):
  
 # clf = svm.SVC()
 clf = linear_model.SGDClassifier(class_weight={1: 5})
-clf.fit(X, Y) 
 
 wclf = svm.SVC(kernel='poly', class_weight={1: 10})
 wclf.fit(X, Y)

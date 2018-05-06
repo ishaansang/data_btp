@@ -4,7 +4,7 @@ import sys
 stops = []
 gpsdata = []
 
-TimeConstant = 10
+TimeConstant = 30
 orig_stdout = sys.stdout
 
 def diff(time1,time2):
@@ -67,7 +67,7 @@ for a,b in zip(stops,gpsdata):
 	print start,end
 
 	fp = open(b,'r')
-	f = open(b[0:-32] + 'LaccNearStops.txt',"w")
+	f = open(b[0:-32] + 'NNLaccNearStops.txt',"w")
 	sys.stdout = f
 	next(fp)
 	for line in fp:

@@ -9,7 +9,7 @@ import random
 # from statistics import mode
 stops = []
 from sklearn import linear_model
-
+import matplotlib.pyplot as plt
 # print(__doc__)
 
 import numpy as np
@@ -19,10 +19,10 @@ import matplotlib.pyplot as plt
 
 def myfunc(arr):
 	# return reduce(lambda x, y: x + y, arr) / len(arr)  #mean
-	# return max(set(arr), key=arr.count)       #mode
+	return min(set(arr), key=arr.count)       #mode
 	# return median(arr)                          ##median 
 	# return std(arr,axis = 0) #deviation
-	return kurtosis(arr)
+	# return kurtosis(arr)
 
 def getOffset(v1,v2,v3,id):
 	# m = min(v1,v2,v3)
@@ -47,10 +47,11 @@ def getOffset(v1,v2,v3,id):
 for subdir, dirs, files in os.walk(os.getcwd()):
     for file in files:
         filepath = subdir + os.sep + file
-        if file.startswith( 'LaccNearStops' ):
+        if file.startswith( 'NNLacc' ):
         	stops.append(filepath)
 
 
+# print (stops)
 
 graph = []
 graph.append((1,6,7,12,13,14,15,16,18,19,20,21)) 
@@ -59,12 +60,16 @@ d = {}
 
 for idx in graph[0]:
 	fp = open(stops[idx],'r')
+	# next(fp)
 	for line in fp:
 		line = ' '.join(line.split())
 		line = line.strip()
 		line = line.replace(' ',',')
 		line = line.split(',')
-		
+		if line[-1].startswith('BusStop'):
+			continue
+
+		# print (line)
 		fac = 1
 
 		if idx == 15 or idx == 16:
@@ -88,6 +93,8 @@ for idx in graph[0]:
 
 X = []
 Y = []
+c1 = 0
+c2 = 0
 for key,value in sorted(d.iteritems()):
 	if len(value) == 5:
 		addtemp = []
@@ -109,22 +116,54 @@ for key,value in sorted(d.iteritems()):
 		# print (addtemp,val[3])
 		X.append(addtemp)
 		Y.append(float(val[3]))
+		if float(val[3]) == 0:
+			c1+=1
+		else :
+			c2+=1
+
+print (c1,c2)
+
+# fac = 4
+# idd = 0
+# xx = {}
+# for val in X:
+# 	if round(val[idd],fac) not in xx:
+# 		xx[round(val[idd],fac)] = 0
+# 	xx[round(val[idd],fac)] += 1
+
+# aa = []
+# bb = []
 
 
-# clf = svm.SVC()
+# for key,value in sorted(xx.iteritems()):
+# 	aa.append(key)
+# 	bb.append(value)
+
+# # print (bb)
+
+# f, ax = plt.subplots()
+# ax.plot(aa,bb)
+# ax.set_title('Window Min LaccX')
+
+# # plt.plot(aa,bb)
+# # plt.set_title('Window Mean')
+# plt.show()
+
+clf = svm.SVC()
  
-# clf = svm.SVC()
-clf = linear_model.SGDClassifier(class_weight={1: 5})
+clf = svm.SVC()
+clf = linear_model.SGDClassifier(class_weight='balanced')
 clf.fit(X, Y) 
 
-wclf = svm.SVC(kernel='poly', class_weight={1: 10})
+wclf = svm.SVC(class_weight = 'balanced')
 wclf.fit(X, Y)
 
 
-num = 0
-den = 0
+# # # num = 0
+# # # den = 0
 
 print ( clf.score(X,Y) )
+print ( wclf.score(X,Y) )
 
 # orig_stdout = sys.stdout
 

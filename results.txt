@@ -1,0 +1,13 @@
+Big dataset
+wclf = svm.SVC(class_weight={0:2,1:0.5})
+wclf.fit(X, Y)
+
+mean = 0.595495998511
+max = 0.69276009678
+median = 0.652372975991
+deviation = 0.646156709473
+kurtosis = 0.714982319002
+
+default 
+sab main 0.808821887214
+max main 0.808970779825
