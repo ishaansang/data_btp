@@ -19,10 +19,10 @@ import matplotlib.pyplot as plt
 
 def myfunc(arr):
 	# return reduce(lambda x, y: x + y, arr) / len(arr)  #mean
-	return max(set(arr), key=arr.count)       #mode
+	# return max(set(arr), key=arr.count)       #mode
 	# return median(arr)                          ##median 
 	# return std(arr,axis = 0) #deviation
-	# return kurtosis(arr)
+	return kurtosis(arr)
 
 def getOffset(v1,v2,v3,id):
 	# m = min(v1,v2,v3)
