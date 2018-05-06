@@ -73,25 +73,30 @@ while not q.empty():
 		else :
 			s2.add(item[1])		
 
+# print "--------------"
+
+# for val in s1:
+# 	print val
+
+# print "--------------"
+
+# for val in s2:
+# 	print val
+
 print "--------------"
 
-for val in s1:
-	print val
-
-print "--------------"
-
-for val in s2:
-	print val
-
-print "--------------"
 X = np.array(arr)
+
 kmeans = KMeans(n_clusters=2, random_state=0).fit(X)
+print "Kmeans labels"
 print kmeans.labels_	
 
-means = AgglomerativeClustering( n_clusters = 2, linkage='ward').fit(X)
+means = AgglomerativeClustering( n_clusters = 2, linkage='average').fit(X)
+print "Ward Clustering labels"
 print means.labels_
 
 meanshift = MeanShift().fit(X)
+print "MeanShift labels"
 print meanshift.labels_
 
 print 'here'

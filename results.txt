@@ -7,7 +7,31 @@ max = 0.69276009678
 median = 0.652372975991
 deviation = 0.646156709473
 kurtosis = 0.714982319002
+min = 0.692908989391
+
+------------------balanced ----------
+min = 0.644705006514
+
 
 default 
 sab main 0.808821887214
-max main 0.808970779825
+max/min main 0.808970779825
+
+
+linear_model.SGDClassifier(class_weight='balanced')
+min = 0.517364600782
+
+
+
+
+linear_model.SGDClassifier(class_weight={0:2,1:0.5})
+min = 0.746324213661
+
+default
+min = 0.808821887214
+
+
+0.440759352317
+0.746324213661
+0.692908989391
+0.644705006514

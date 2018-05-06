@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 
 def myfunc(arr):
 	# return reduce(lambda x, y: x + y, arr) / len(arr)  #mean
-	return min(set(arr), key=arr.count)       #mode
+	return max(set(arr), key=arr.count)       #mode
 	# return median(arr)                          ##median 
 	# return std(arr,axis = 0) #deviation
 	# return kurtosis(arr)
@@ -47,7 +47,7 @@ def getOffset(v1,v2,v3,id):
 for subdir, dirs, files in os.walk(os.getcwd()):
     for file in files:
         filepath = subdir + os.sep + file
-        if file.startswith( 'NNLacc' ):
+        if file.startswith( 'LACC_' ):
         	stops.append(filepath)
 
 
@@ -60,7 +60,7 @@ d = {}
 
 for idx in graph[0]:
 	fp = open(stops[idx],'r')
-	# next(fp)
+	next(fp)
 	for line in fp:
 		line = ' '.join(line.split())
 		line = line.strip()
@@ -149,22 +149,36 @@ print (c1,c2)
 # # plt.set_title('Window Mean')
 # plt.show()
 
-clf = svm.SVC()
+# clf = svm.SVC()
  
-clf = svm.SVC()
-clf = linear_model.SGDClassifier(class_weight='balanced')
+# clf = svm.SVC()
+clf = linear_model.SGDClassifier()
 clf.fit(X, Y) 
 
-wclf = svm.SVC(class_weight = 'balanced')
+cclf = linear_model.SGDClassifier(class_weight={0:2,1:0.5})
+cclf.fit(X,Y)
+
+ccclf = linear_model.SGDClassifier(class_weight='balanced')
+ccclf.fit(X, Y) 
+
+
+wclf = svm.SVC(class_weight={0:2,1:0.5})
 wclf.fit(X, Y)
 
+wwclf = svm.SVC()
+wwclf.fit(X,Y)
 
+wwwclf = svm.SVC(class_weight='balanced')
+wwwclf.fit(X,Y)
 # # # num = 0
 # # # den = 0
 
 print ( clf.score(X,Y) )
+print ( cclf.score(X,Y) )
+print ( ccclf.score(X,Y) )
 print ( wclf.score(X,Y) )
-
+print ( wwclf.score(X,Y) )
+print ( wwwclf.score(X,Y) )
 # orig_stdout = sys.stdout
 
 # f = open('debugdata3.txt','w')
