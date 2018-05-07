@@ -11,7 +11,7 @@ stops = []
 from sklearn import linear_model
 import matplotlib.pyplot as plt
 # print(__doc__)
-
+import sklearn.metrics
 import numpy as np
 import matplotlib.pyplot as plt
 # from sklearn import svm
@@ -162,24 +162,49 @@ ccclf = linear_model.SGDClassifier(class_weight='balanced')
 ccclf.fit(X, Y) 
 
 
-wclf = svm.SVC(class_weight={0:2,1:0.5})
-wclf.fit(X, Y)
+# wclf = svm.SVC(class_weight={0:2,1:0.5})
+# wclf.fit(X, Y)
 
-wwclf = svm.SVC()
-wwclf.fit(X,Y)
+# wwclf = svm.SVC()
+# wwclf.fit(X,Y)
 
-wwwclf = svm.SVC(class_weight='balanced')
-wwwclf.fit(X,Y)
+# wwwclf = svm.SVC(class_weight='balanced')
+# wwwclf.fit(X,Y)
+
 # # # num = 0
 # # # den = 0
+predict = clf.predict(X)
+# print (predict)
+precision = sklearn.metrics.precision_score(Y, predict, average='binary')
+recall = sklearn.metrics.recall_score(Y, predict, average='binary')
+f1 = sklearn.metrics.f1_score(Y, predict, average='binary')
 
-print ( clf.score(X,Y) )
-print ( cclf.score(X,Y) )
-print ( ccclf.score(X,Y) )
-print ( wclf.score(X,Y) )
-print ( wwclf.score(X,Y) )
-print ( wwwclf.score(X,Y) )
-# orig_stdout = sys.stdout
+print (precision,recall,f1)
+
+predict = ccclf.predict(X)
+# print (predict)
+precision = sklearn.metrics.precision_score(Y, predict, average='binary')
+recall = sklearn.metrics.recall_score(Y, predict, average='binary')
+f1 = sklearn.metrics.f1_score(Y, predict, average='binary')
+
+print (precision,recall,f1)
+
+
+predict = cclf.predict(X)
+# print (predict)
+precision = sklearn.metrics.precision_score(Y, predict, average='binary')
+recall = sklearn.metrics.recall_score(Y, predict, average='binary')
+f1 = sklearn.metrics.f1_score(Y, predict, average='binary')
+
+print (precision,recall,f1)
+
+# print ( clf.score(X,Y) )
+# print ( cclf.score(X,Y) )
+# print ( ccclf.score(X,Y) )
+# print ( wclf.score(X,Y) )
+# print ( wwclf.score(X,Y) )
+# print ( wwwclf.score(X,Y) )
+# # orig_stdout = sys.stdout
 
 # f = open('debugdata3.txt','w')
 # sys.stdout = f
